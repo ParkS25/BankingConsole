@@ -17,10 +17,10 @@ class BankAccount(ABC):
         self._transaction_history.append(f"+ ${amount:.2f}")
 
 
-    def withdrawal(self, amount):
+    def withdraw(self, amount):
         if amount <= 0:
-            raise ValueError("Withdrawals must be positive")
-        if amount > self.__balance:
+            raise ValueError("Withdraws must be positive")
+        if amount > self._balance:
             raise ValueError("Insufficient Funds")
         self._balance -= amount
         self._transaction_history.append(f"- ${amount:.2f}")
@@ -29,6 +29,11 @@ class BankAccount(ABC):
     def get_balance(self):
         return self._balance
     
+
+    def get_transaction_history(self):
+        return(self._transaction_history)
+
+
     @abstractmethod
     def account_type(self):
         pass
@@ -58,12 +63,14 @@ class CheckingAccount(BankAccount):
         super().__init__(owner,balance)
         self._overdraft_limit = overdraft_limit
     
-    def withdrawal(self, amount):
+    def withdraw(self, amount):
         if amount <= 0:
-            raise ValueError("Withdrawals must be positive")
+            raise ValueError("Withdraws must be positive")
         if amount > self._balance + self._overdraft_limit:
             raise ValueError("Exceeds overdraft limit")
         self._balance -= amount
+        if self._balance < 0:
+            print("Account is overdrawn. Make a deposit to avoid overdraft fees.")
         self._transaction_history.append(f"- ${amount:2f}")
 
     #Polymorphism: overriding
