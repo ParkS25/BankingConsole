@@ -4,12 +4,14 @@ from abc import ABC, abstractmethod
 class BankAccount(ABC):
     
 
-    def __init__(self, owner, balance = 0):
+    def __init__(self, owner, account_number, balance = 0):
         self.owner = owner
+        self.account_number = account_number
         self._balance = balance     #encapsulation, can only be changed by methods
         self._transaction_history = []
     
 
+    #deposit method
     def deposit(self, amount):
         if amount <= 0:
             raise ValueError("Deposits must be positive")
@@ -17,6 +19,7 @@ class BankAccount(ABC):
         self._transaction_history.append(f"+ ${amount:.2f}")
 
 
+    #withdraw method
     def withdraw(self, amount):
         if amount <= 0:
             raise ValueError("Withdraws must be positive")
@@ -47,9 +50,11 @@ class SavingsAccount(BankAccount):
         super().__init__(owner, balance)
         self._interest_rate = interest_rate
     
+
     def accrue_interest(self):
         interest = self._interest_rate*self._balance
         self._balance += interest
+
 
     #Polymorphism: overriding
     def account_type(self):
@@ -63,6 +68,8 @@ class CheckingAccount(BankAccount):
         super().__init__(owner,balance)
         self._overdraft_limit = overdraft_limit
     
+
+    #overrides the withdraw method of the bank accounts parent class, allows for checking accounts to withdraw up to their overdraft limit
     def withdraw(self, amount):
         if amount <= 0:
             raise ValueError("Withdraws must be positive")
@@ -72,6 +79,7 @@ class CheckingAccount(BankAccount):
         if self._balance < 0:
             print("Account is overdrawn. Make a deposit to avoid overdraft fees.")
         self._transaction_history.append(f"- ${amount:2f}")
+
 
     #Polymorphism: overriding
     def account_type(self):
