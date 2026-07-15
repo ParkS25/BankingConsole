@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-
+import datetime
 
 class BankAccount(ABC):
     
@@ -41,6 +41,9 @@ class BankAccount(ABC):
     def account_type(self):
         pass
 
+    def __str__(self):
+        return (f"Account #{self.account_number} [{self.account_type()}] "
+                f"{self.owner} - Balance: ${self._balance:.2f}")
 
 #inheritance Savings account is a subtype of bank account, inherits methods from the bank account class
 class SavingsAccount(BankAccount):
