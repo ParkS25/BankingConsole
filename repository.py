@@ -16,7 +16,14 @@ class MongoDBRepository:
         self.db = None
         self.users_collection = None
         self.accounts_collection = None
-    
+
+
+
+
+
+
+
+
     def connect(self):
         """Connect to MongoDB Atlas"""
         try:

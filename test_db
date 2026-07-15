@@ -1,0 +1,10 @@
+from db import user_collections
+
+user = {
+    "username": "test_user",
+    "email": "test@email.com"
+}
+
+result = user_collections.insert_one(user)
+
+print(result.inserted_id)
