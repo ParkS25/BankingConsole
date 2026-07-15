@@ -1,15 +1,15 @@
 from abc import ABC, abstractmethod
-import datetime
+from datetime import datetime
 
 class BankAccount(ABC):
     
 
-    def __init__(self, owner, account_number, balance = 0):
+    def __init__(self, owner, account_number, balance = 0 ):
         self.owner = owner
         self.account_number = account_number
         self._balance = balance     #encapsulation, can only be changed by methods
         self._transaction_history = []
-    
+        self.created_at = datetime.now()
 
     #deposit method
     def deposit(self, amount):

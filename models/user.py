@@ -1,11 +1,11 @@
-import datetime
+from datetime import datetime
 class User:
-    def __init__(self, username, email, password, time_created):
+    def __init__(self, username, email, password):
         self.username = username
         self.email = email
         self.password = password
         self.account_numbers = []
-        self.time_created = datetime
+        self.created_at = datetime.now()
 
     def add_accounts(self, account_number):
         self.accounts
